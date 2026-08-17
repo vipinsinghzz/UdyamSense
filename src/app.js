@@ -1,0 +1,18 @@
+const express = require('express');
+const cors = require('cors');
+const env = require('./config/env');
+const { DATA_CONTRACT_VERSION } = require('./constants/dataContract');
+const { isDatabaseConnected } = require('./config/database');
+const { isMqttConnected } = require('./mqtt/mqttClient');
+const machineRoutes = require('./routes/machineRoutes');
+const sensorRoutes = require('./routes/sensorRoutes');
+const { errorHandler } = require('./middleware/errorHandler');
+const app = express();
+app.use(cors({ origin: env.frontend_url, methods: ['GET'] }));
+app.use(express.json({ limit: '32kb' }));
+app.get('/api/status', (req, res) => res.json({ success: true, data: { backend: 'online', database: isDatabaseConnected() ? 'connected' : 'disconnected', mqtt: isMqttConnected() ? 'connected' : 'disconnected', data_contract_version: DATA_CONTRACT_VERSION } }));
+app.use('/api/machines', machineRoutes);
+app.use('/api/sensors', sensorRoutes);
+app.use((req, res) => res.status(404).json({ success: false, error: 'Route not found' }));
+app.use(errorHandler);
+module.exports = app;
