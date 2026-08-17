@@ -11,6 +11,7 @@ module.exports = {
   mqtt_broker_url: process.env.MQTT_BROKER_URL || 'mqtt://broker.hivemq.com:1883',
   mqtt_topic: process.env.MQTT_TOPIC || 'machine/health',
   frontend_url: process.env.FRONTEND_URL || 'http://localhost:3000',
+  ai_api_url: process.env.AI_API_URL || 'http://127.0.0.1:8001',
   db: {
     host: process.env.DB_HOST || 'localhost', port: number('DB_PORT', 3306),
     database: process.env.DB_NAME || 'udyamsense', user: process.env.DB_USER || 'root',

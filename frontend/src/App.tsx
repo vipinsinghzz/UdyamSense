@@ -271,8 +271,8 @@ function formatStateLabel(state: string) {
   return state.replaceAll("_", " ");
 }
 
-function formatProbableFault(fault: string) {
-  if (fault === "NONE") return "None detected";
+function formatProbableFault(fault?: string) {
+  if (!fault || fault === "NONE") return "None detected";
 
   const readable = fault.replaceAll("_", " ").toLowerCase();
   return readable.charAt(0).toUpperCase() + readable.slice(1);
